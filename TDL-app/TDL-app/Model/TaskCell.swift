@@ -19,17 +19,17 @@ class TaskCell: UITableViewCell {
 
     func setTaskCell(task: Task) {
         taskLabel.text = task.title
-        changeAccessory(task: task)
+        setAccessory(task: task)
     }
     
     func changeAccessoryType(task: Task) -> Task {
-        var changeableTask = task
+        let changeableTask = task
         changeableTask.state = !task.state
-        changeAccessory(task: changeableTask)
+        setAccessory(task: changeableTask)
         return changeableTask
     }
     
-    func changeAccessory(task: Task) {
+    func setAccessory(task: Task) {
         if task.state {
             self.accessoryType = .checkmark
         } else {

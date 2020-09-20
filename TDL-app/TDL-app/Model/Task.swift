@@ -6,18 +6,18 @@
 //  Copyright © 2020 Meitar Basson. All rights reserved.
 //
 
-import UIKit
+//import UIKit
 
-struct Task {
-    let title: String
-    let deadline: String
-    
-    var state: Bool = false
-    
-    func setDeadline() {
-        
-    }
-}
+//struct Task {
+//    let title: String
+//    let deadline: String
+//
+//    var state: Bool = false
+//
+//    func setDeadline() {
+//
+//    }
+//}
 
 //enum State {
 //    case Done = true

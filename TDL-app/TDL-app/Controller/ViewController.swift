@@ -7,13 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var taskTable: UITableView!
     
-    let task: [Task] = [Task(title: "Hello", deadline: "", state: false)]
-    var data: Data!
+    var data: Data = Data()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +21,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         taskTable.delegate = self
         taskTable.dataSource = self
         
-        data = Data(task: task)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -37,17 +36,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = taskTable.cellForRow(at: indexPath) as! TaskCell
         data.task[indexPath.row] = cell.changeAccessoryType(task: data.task[indexPath.row])
+        data.saveData()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            data.deleteTask(index: indexPath.row)
+            taskTable.reloadData()
+        }
+    }
 
     @IBAction func addButtonTapped(_ sender: Any) {
-        let alert = Alert(title: "Alert", message: nil, preferredStyle: .alert)
-        alert.setAlert()
-        present(alert, animated: true, completion: nil)
+        presentAlert(title: "Alert", message: "Custom alert", actionText: "Working") { text in
+            self.data.addNewTask(taskTitle: text)
+            self.taskTable.reloadData()
+        }
     }
-    
 }
 
